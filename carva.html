@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probando Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid gray;
+            margin: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="miCanvas" width="800" height="700"></canvas>
+    <script>
+        let miCanvas = document.getElementById("miCanvas");
+        let contexto = miCanvas.getContext("2d");
+        let anchura = miCanvas.width;
+        let altura = miCanvas.height;
+        let seEstaArrastrando = false;
+        //contexto.translate( anchura/2, altura/2);
+
+        let variacion = 5;
+        /*for(let radio = variacion * 60; radio > variacion; radio -= variacion) {
+            contexto.fillStyle = ( radio % (variacion * 2) == 0) ? "white" : "black";
+            contexto.beginPath();
+            contexto.arc( anchura/2, altura/2, radio, 0, Math.PI/180 * 360);
+            contexto.fill();
+        }*/
+
+        /*let num = 0;*/
+        let variable = 40;
+        for (let x = variable, y = variable; x <= Math.max(anchura, altura); x += variable, y += variable) {
+            contexto.beginPath();
+            crearLinea({ x: x, y: 0 }, { x: x, y: altura }).dibujar();
+            contexto.beginPath();
+            crearLinea({ x: 0, y: y }, { x: anchura, y: y }).dibujar();
+
+        }
+
+        let radio = 100, centroX = Math.random() * anchura, centroY = Math.random() * altura, haciaAbajo = true, haciaLaDerecha = true;
+
+        setInterval(function dibujarCirculo() {
+
+            radio = 100;
+            contexto.beginPath();
+            contexto.arc(centroX, centroY, radio, 0, Math.PI / 180 * 360);
+            contexto.stroke();
+            contexto.fillStyle = "rgba(100,0,0,0.5)";
+
+            radio = 50;
+            contexto.beginPath();
+            contexto.arc(centroX, centroY, radio, 0, Math.PI / 180 * 360);
+            contexto.fill();
+
+            contexto.fillStyle = "rgba(0,0,0,0.5)"; //"#000000BB";
+            contexto.beginPath();
+            contexto.arc(centroX + 10, centroY + 10, radio, 0, Math.PI / 180 * 360);
+            contexto.fill();
+            if (centroX + radio > anchura) {
+                haciaLaDerecha = false;
+            } else if (centroX - radio < 0) {
+                haciaLaDerecha = true;
+            }
+
+            if (centroY + radio > altura) {
+                haciaAbajo = false;
+            } else if (centroY - radio < 0) {
+                haciaAbajo = true;
+            }
+            centroX += haciaLaDerecha ? 10 : -10;
+            centroY += haciaAbajo ? 20 : -20;
+        }, 100);
+
+        /*contexto.beginPath();
+        crearLinea({ x: anchura / 2 - 20, y: altura / 2 }, { x: anchura / 2 + 20, y: altura / 2 }).dibujar();
+        crearLinea({ x: anchura / 2, y: altura / 2 - 20 }, { x: anchura / 2, y: altura / 2 + 20 }).dibujar();
+
+        contexto.beginPath();
+        crearLinea({ x: anchura / 2 - 40, y: altura / 2 }, { x: anchura / 2 + 40, y: altura / 2 }).dibujar();
+        crearLinea({ x: anchura / 2, y: altura / 2 - 40 }, { x: anchura / 2, y: altura / 2 + 40 }).dibujar();*/
+
+        let lineas = [];
+        let lineaActual;
+
+        function dibujarLineas() {
+            limpiarPanel();
+
+            for (let i = 0; i < lineas.length; i++) {
+                lineas[i].dibujar();
+            }
+        }
+
+        function limpiarPanel() {
+            contexto.fillStyle = "white"; //"white | rgb(255, 255, 255) | #FFFFFF"
+            contexto.clearRect(0, 0, anchura, altura);
+        }
+
+        function crearLinea(puntoInicial, puntoFinal) {
+            return {
+                puntoInicial: puntoInicial,
+                puntoFinal: puntoFinal,
+                dibujar() {
+                    contexto.save();
+                    contexto.beginPath();
+                    contexto.moveTo(puntoInicial.x, puntoInicial.y);
+                    contexto.lineTo(puntoFinal.x, puntoFinal.y);
+                    contexto.stroke();
+                    contexto.restore();
+                },
+                actualizar(puntoActual) {
+                    puntoFinal = puntoActual;
+                }
+            };
+        }
+
+        miCanvas.addEventListener("mousedown", function (evento) {
+            seEstaArrastrando = true;
+            let puntoInicial = { x: evento.offsetX, y: evento.offsetY };
+            let puntoFinal = { x: evento.offsetX, y: evento.offsetY };
+
+            lineaActual = crearLinea(puntoInicial, puntoFinal);
+            lineas.push(lineaActual);
+            dibujarLineas();
+        });
+
+        miCanvas.addEventListener("mousemove", function (evento) {
+            if (seEstaArrastrando) {
+                puntoFinal = { x: evento.offsetX, y: evento.offsetY };
+                lineaActual.actualizar(puntoFinal);
+                dibujarLineas();
+            }
+        });
+
+        miCanvas.addEventListener("mouseup", function (evento) {
+            seEstaArrastrando = false;
+        });
+    </script>
+</body>
+
+</html>
