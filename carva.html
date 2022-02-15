@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Canvas</title>
 
+    
     <style>
         canvas {
             border: 1px solid gray;
@@ -19,6 +20,7 @@
 <body>
     <canvas id="miCanvas" width="800" height="700"></canvas>
     <script>
+
         let miCanvas = document.getElementById("miCanvas");
         let contexto = miCanvas.getContext("2d");
         let anchura = miCanvas.width;
@@ -33,6 +35,7 @@
             contexto.arc( anchura/2, altura/2, radio, 0, Math.PI/180 * 360);
             contexto.fill();
         }*/
+
 
         /*let num = 0;*/
         let variable = 40;
@@ -120,6 +123,12 @@
             };
         }
 
+        function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+  ctx.font = '48px serif';
+  ctx.strokeText('Hello world', 10, 50);
+}
+
         miCanvas.addEventListener("mousedown", function (evento) {
             seEstaArrastrando = true;
             let puntoInicial = { x: evento.offsetX, y: evento.offsetY };
@@ -142,6 +151,7 @@
             seEstaArrastrando = false;
         });
     </script>
+
 </body>
 
 </html>
