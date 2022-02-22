@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gato Corriendo</title>
+    <title>Probando Canvas</title>
     <style>
         canvas {
             border: 1px solid gray;
@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <canvas id="miCanvas" width="800" height="300"></canvas>
+    <canvas id="miCanvas" width="1000" height="500"></canvas>
 
     <img src="imagenes/gato1.png" alt="" id="gato1">
     <img src="imagenes/gato2.png" alt="" id="gato2">
@@ -32,6 +32,19 @@
         let contexto = miCanvas.getContext("2d");
         let anchura = miCanvas.width;
         let altura = miCanvas.height;
+        let intervalo;
+        let estaPausado = false;
+        let estaSaltando = false;
+        let posicionHorizontal;
+
+        let obstaculos = [
+        ]; //{ x, y, anchura, altura }
+
+
+        for (let i = 0, x = anchura; i < 50; i++, x+= Math.round( Math.random() * 400 ) + 600 ) {
+            obstaculos.push( { x: x, y: altura - 100, anchura: 70 , altura: 100 } );
+        }
+
 
         function gradosARadianes( grados ) {
             return grados * (Math.PI/180);
@@ -49,45 +62,72 @@
         }
 
         //4- Dibujar una imagen
-        let imagenActual = 1, imagen = document.getElementById(`gato${ imagenActual }`),
-         anchuraImagen = imagen.width, alturaImagen = imagen.height;
-         let estaCreciendo = false;
+        let imagenActual = 1,
+            imagen = document.getElementById(`gato${ imagenActual }`),
+            anchuraImagenInicial,
+            alturaImagenInicial,
+            anchuraImagen = imagen.width, 
+            alturaImagen = imagen.height,
+            estaCreciendo = false,
+            contidadASaltar = 0;
 
          imagen.onload = dibujarImagen;
 
-        function dibujarImagen() {
-            anchuraImagen = imagen.width;
-            alturaImagen = imagen.height;
-            let posicionHorizontal = 0;
-            let posicionVertical = 0;
-            let tiempo = 120;
+        function dibujarImagen() {        
+            anchuraImagenInicial = anchuraImagenInicial || imagen.width;
+            alturaImagenInicial = alturaImagenInicial || imagen.height;
+            anchuraImagen = anchuraImagenInicial / 2;//anchuraImagen || anchuraImagenInicial; 
+            alturaImagen = alturaImagenInicial / 2; //alturaImagen || alturaImagenInicial;
+
+            let porcentajeAltura = anchuraImagenInicial/alturaImagenInicial;
+
+            posicionHorizontal = posicionHorizontal || 0;
+
+            let tiempo = 70;
             let xInicial = 0;
             let tamanioMinimoImagen = 60;
             let tamanioMaximoImagen = 500;
-            setInterval( () => {
-                imagen = document.getElementById(`gato${ imagenActual }`);
-                console.log(imagenActual);
-                console.log("anchuraImagen: ", anchuraImagen);
-                console.log("alturaImagen: ", alturaImagen);
+            intervalo = setInterval( () => {
+                // console.log(imagenActual);
+                // console.log("anchuraImagen: ", anchuraImagen);
+                // console.log("alturaImagen: ", alturaImagen);
                 
                 contexto.beginPath();
                 contexto.fillStyle = "#eee";
                 contexto.fillRect(0,0, anchura, altura);
 
-                let variacionHorizontal = Math.round( Math.log2(tiempo) );
-                console.log( "variacionHorizontal: ", variacionHorizontal );
+                let variacionHorizontal = 20;
+                // console.log( "variacionHorizontal: ", variacionHorizontal );
 
-                posicionHorizontal += variacionHorizontal;
+                //posicionHorizontal += variacionHorizontal;
                 if(posicionHorizontal > anchura) {
                     posicionHorizontal = -anchuraImagen;
                 }
 
+                //dibujar el piso
+                contexto.beginPath();
+                contexto.fillStyle = "gray";
+                contexto.fillRect(0,altura - 20, anchura, 20);
+
                 //dibujar lineas verticales para hacer mas realista el movimiento
                 let variacion = anchuraImagen;
-                for( let x = anchura - xInicial; x > 0 ; x -= variacion) {
+                for( let x = anchura - xInicial; x > -variacion ; x -= variacion) {
                     contexto.beginPath();
+                    contexto.strokeStyle = "black";
                     contexto.moveTo( x, 0 );
-                    contexto.lineTo( x, altura );
+                    contexto.lineTo( x, altura - 20 );
+                    contexto.stroke();
+
+                    contexto.beginPath();
+                    contexto.strokeStyle = "white";
+                    contexto.moveTo( x, altura - 20 );
+                    contexto.lineTo( x + 40, altura);
+                    contexto.stroke();
+
+                    contexto.beginPath();
+                    contexto.strokeStyle = "white";
+                    contexto.moveTo( x + variacion/2, altura - 20 );
+                    contexto.lineTo( x + variacion/2 + 40, altura);
                     contexto.stroke();
                 }
 
@@ -96,24 +136,54 @@
                     xInicial = 0;
                 }
 
-                anchuraImagen = anchuraImagen + (estaCreciendo ? 1 : -1);
-                alturaImagen = alturaImagen + (estaCreciendo ? 1 : -1);
+                //anchuraImagen = anchuraImagen + (estaCreciendo ? 1 : -1);
+                //alturaImagen = anchuraImagen / porcentajeAltura;
 
-                posicionVertical = altura - alturaImagen;
+                let posicionVertical = altura - alturaImagen;
 
-                //dibujar una linea horizontal sobre la imagen para hacer aun mas realista el movimiento
-                contexto.beginPath();
-                contexto.moveTo( 0, posicionVertical );
-                contexto.lineTo( anchura, posicionVertical );
-                contexto.stroke();
+                contexto.strokeStyle = "black";
 
-                //dibujar el piso
-                contexto.beginPath();
-                contexto.fillStyle = "gray";
-                contexto.fillRect(0,altura - 20, anchura, 20);
+                //dibujar lineas linea horizontales desde encima de la imagen para hacer aun mas realista el movimiento
+                for (let y = posicionVertical; y > 0; y -= altura - posicionVertical) {
+                    contexto.beginPath();
+                    contexto.moveTo( 0, y );
+                    contexto.lineTo( anchura, y );
+                    contexto.stroke(); 
+                }
+
+                if( estaSaltando) {
+                    imagenActual = 8;
+                }
+                else {
+                    imagenActual++
+                    if( imagenActual > 8) {
+                        imagenActual = 1;
+                    }
+                }
+                
+                
+                let maximoASaltar = 50;
 
                 //dibujar la imagen del gato
-                contexto.drawImage(imagen, posicionHorizontal, posicionVertical, anchuraImagen, alturaImagen);
+                contexto.save();
+                contexto.translate(posicionHorizontal, posicionVertical);
+                if(estaSaltando) {
+                    cantidadASaltar += 10;
+                    if(cantidadASaltar > maximoASaltar) {
+                        cantidadASaltar = maximoASaltar;
+                    }
+                    contexto.rotate( gradosARadianes( cantidadASaltar == maximoASaltar ? 0 : -cantidadASaltar) );
+                }
+                else {
+                    cantidadASaltar = 0;
+                }
+                
+                imagen = document.getElementById(`gato${ cantidadASaltar == maximoASaltar ? 2 : imagenActual }`);
+                contexto.drawImage(imagen, 0, ( cantidadASaltar == maximoASaltar ? -alturaImagen * 1.5 : 0), anchuraImagen, alturaImagen);
+
+                contexto.strokeStyle = "red";
+                contexto.strokeRect( 0, ( cantidadASaltar == maximoASaltar ? -alturaImagen * 1.5 : 0), anchuraImagen, alturaImagen);
+                contexto.restore();
                 
                 if( anchuraImagen < tamanioMinimoImagen || alturaImagen < tamanioMinimoImagen) {
                     estaCreciendo = true;
@@ -123,13 +193,40 @@
                     estaCreciendo = false;
                 }
 
-                imagenActual++
-                if( imagenActual > 8) {
-                    imagenActual = 1;
+
+                for (let i = 0; i < obstaculos.length; i++) {
+                    const obstaculo = obstaculos[i];
+                    contexto.fillStyle = "rgb(150, 0, 0)";
+                    contexto.beginPath();
+                    contexto.fillRect(obstaculo.x, obstaculo.y, obstaculo.anchura, obstaculo.altura);
+
+                    contexto.fillStyle = "black";
+                    contexto.beginPath();
+                    contexto.fillText( i, obstaculo.x + 10, obstaculo.y);
+                    contexto.fill();
+
+                    obstaculo.x -= variacionHorizontal;
                 }
-            }, tiempo);
-            
+            }, tiempo); 
         }
+
+        miCanvas.addEventListener("click", () => {
+            if( estaPausado ) {
+                dibujarImagen();
+            }
+            else {
+                clearInterval(intervalo);
+            }
+
+            estaPausado = !estaPausado;
+        });
+
+        document.addEventListener("keydown", function() {
+            estaSaltando = true;
+        });
+        document.addEventListener("keyup", function() {
+            estaSaltando = false;
+        });
     </script>
 </body>
 </html>
