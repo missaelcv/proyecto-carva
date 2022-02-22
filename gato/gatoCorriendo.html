@@ -27,6 +27,7 @@
     <img src="imagenes/gato6.png" alt="" id="gato6">
     <img src="imagenes/gato7.png" alt="" id="gato7">
     <img src="imagenes/gato8.png" alt="" id="gato8">
+    <img src="imagenes/gato9.jpg" alt="" id="gato9">
     <script>
         let miCanvas = document.getElementById("miCanvas");
         let contexto = miCanvas.getContext("2d");
@@ -43,6 +44,10 @@
 
         for (let i = 0, x = anchura; i < 50; i++, x+= Math.round( Math.random() * 400 ) + 600 ) {
             obstaculos.push( { x: x, y: altura - 100, anchura: 70 , altura: 100 } );
+            
+            for (let i = 0, x = anchura; i < 1; i++, x+= Math.round( Math.random() * 100 ) + 300 ) {
+            obstaculos.push( { x: x, y: altura - 110, anchura: 70 , altura: 100 } );
+        }
         }
 
 
@@ -202,7 +207,12 @@
 
                     contexto.fillStyle = "black";
                     contexto.beginPath();
-                    contexto.fillText( i, obstaculo.x + 10, obstaculo.y);
+                    contexto.fillText( i, obstaculo.x + 7, obstaculo.y);
+                    contexto.fill();
+
+                    contexto.fillStyle = "green";
+                    contexto.beginPath();
+                    contexto.fillText( i, obstaculo.x + 100, obstaculo.y);
                     contexto.fill();
 
                     obstaculo.x -= variacionHorizontal;
