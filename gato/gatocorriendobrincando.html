@@ -43,9 +43,7 @@
         let altura = miCanvas.height;
         let estaSubiendo= false;
         let estaSaltando = false;
-
         
-
         // let posicionHorizontal;
         // let intervalo;
         // let estaPausado = false;
@@ -107,7 +105,7 @@
 
             PropCanvas.posicionHorizontal =  PropCanvas.posicionHorizontal || 0;
 
-            let tiempo = 60;
+            let tiempo = 80;
             let xInicial = 0;
             let tamanioMinimoImagen = 60;
             let tamanioMaximoImagen = 500;
@@ -183,8 +181,8 @@
                         imagenActual = 1;
                     }
                 }
-                
-                let maximoAInclinar = 50;
+               
+                let maximoAInclinar = 10;
 
                 //dibujar la imagen del gato
                 contexto.save();
@@ -251,7 +249,7 @@
                 // contexto.font = '25px Calibre';
                 // contexto.fillText('Puntuacion:' + puntuacion,150,50);
             }
-            }, tiempo); 
+            }, tiempo+2); 
         }
 
        
@@ -291,7 +289,7 @@
                 </defs>
                 <ellipse cx="118" cy="70" rx="75" ry="45" fill="url(#grad1)" />
                 <text fill="#ffffff" font-size="20" font-family="Verdana" x="50" y="80">Pulsar Correr</text>
-                SVG.
+               
 
                 
             </svg>
@@ -305,7 +303,7 @@
                 </defs>
                 <ellipse cx="120" cy="70" rx="75" ry="45" fill="url(#grad1)" />
                 <text fill="#ffffff" font-size="20" font-family="Verdana" x="70" y="80">Reintetar</text>
-                SVG.
+               
             </svg>
             
             
