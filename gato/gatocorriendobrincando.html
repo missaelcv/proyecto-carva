@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tranforma Probando Canvas</title>
+    <title>Tranformando gato Canvas</title>
     <style>
         canvas {
             border: 1px solid gray;
@@ -41,18 +41,20 @@
         let contexto = miCanvas.getContext("2d");
         let anchura = miCanvas.width;
         let altura = miCanvas.height;
-        // let intervalo;
-        // let estaPausado = false;
         let estaSubiendo= false;
         let estaSaltando = false;
+
+        
+
         // let posicionHorizontal;
+        // let intervalo;
+        // let estaPausado = false;
 
         function dibujarObstaculo(tipoObstaculo){
         }
 
         let obstaculos = [
         ]; //{ x, y, anchura, altura }
-        
 
         for (let i = 0, x = anchura; i < 50; i++, x+= Math.round( Math.random() * 600 ) + 600 ) {
             obstaculos.push( { x: x, y: altura - 100, anchura: 70 , altura: 100, dibujar:function(contexto){
@@ -120,7 +122,6 @@
 
                 let variacionHorizontal = 20;
                 // console.log( "variacionHorizontal: ", variacionHorizontal );
-
                 //posicionHorizontal += variacionHorizontal;
                 if(PropCanvas.posicionHorizontal > anchura) {
                     PropCanvas.posicionHorizontal = -anchuraImagen;
@@ -233,7 +234,6 @@
                     estaCreciendo = false;
                 }
 
-
                 for (let i = 0; i < obstaculos.length; i++) {
                     const obstaculo = obstaculos[i];
                     obstaculo.dibujar(contexto);
@@ -254,9 +254,11 @@
             }, tiempo); 
         }
 
+       
         miCanvas.addEventListener("click", () => {
             if( PropCanvas.estaPausado ) {
                 dibujarImagen();
+                
             }
             else {
                 clearInterval(PropCanvas.intervalo);
@@ -275,6 +277,38 @@
         // document.addEventListener("keyup", function() {
         //     estaSaltando = false;
         // });
+
+
+        
     </script>
+
+            <svg height="150" width="600">
+                <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgb(248, 0, 0);stop-opacity:1" />
+                </linearGradient>
+                </defs>
+                <ellipse cx="118" cy="70" rx="75" ry="45" fill="url(#grad1)" />
+                <text fill="#ffffff" font-size="20" font-family="Verdana" x="50" y="80">Pulsar Correr</text>
+                SVG.
+
+                
+            </svg>
+
+            <svg height="150" width="600">
+                <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgb(23, 161, 253);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgb(23, 241, 15);stop-opacity:1" />
+                </linearGradient>
+                </defs>
+                <ellipse cx="120" cy="70" rx="75" ry="45" fill="url(#grad1)" />
+                <text fill="#ffffff" font-size="20" font-family="Verdana" x="70" y="80">Reintetar</text>
+                SVG.
+            </svg>
+            
+            
+
 </body>
 </html>
