@@ -27,7 +27,8 @@
     <img src="imagenes/gato6.png" alt="" id="gato6">
     <img src="imagenes/gato7.png" alt="" id="gato7">
     <img src="imagenes/gato8.png" alt="" id="gato8">
-    <img src="imagenes/gato9.jpg" alt="" id="gato9">
+    <img src="imagenes/gato9.png" alt="" id="gato9">
+    <img src="imagenes/gato10.png" alt="" id="gato10">
     <script>
         let miCanvas = document.getElementById("miCanvas");
         let contexto = miCanvas.getContext("2d");
@@ -157,11 +158,11 @@
                 }
 
                 if( estaSaltando) {
-                    imagenActual = 8;
+                    imagenActual = 10;
                 }
                 else {
                     imagenActual++
-                    if( imagenActual > 8) {
+                    if( imagenActual > 10) {
                         imagenActual = 1;
                     }
                 }
@@ -187,7 +188,7 @@
                 contexto.drawImage(imagen, 0, ( cantidadASaltar == maximoASaltar ? -alturaImagen * 1.5 : 0), anchuraImagen, alturaImagen);
 
                 contexto.strokeStyle = "red";
-                contexto.strokeRect( 0, ( cantidadASaltar == maximoASaltar ? -alturaImagen * 1.5 : 0), anchuraImagen, alturaImagen);
+               // contexto.strokeRect( 0, ( cantidadASaltar == maximoASaltar ? -alturaImagen * 1.5 : 0), anchuraImagen, alturaImagen);
                 contexto.restore();
                 
                 if( anchuraImagen < tamanioMinimoImagen || alturaImagen < tamanioMinimoImagen) {
