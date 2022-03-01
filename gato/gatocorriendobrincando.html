@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probando Canvas</title>
+    <title>Tranforma Probando Canvas</title>
     <style>
         canvas {
             border: 1px solid gray;
@@ -27,6 +27,8 @@
     <img src="imagenes/gato6.png" alt="" id="gato6">
     <img src="imagenes/gato7.png" alt="" id="gato7">
     <img src="imagenes/gato8.png" alt="" id="gato8">
+    <img src="imagenes/gato9.png" alt="" id="gato9">
+    <img src="imagenes/gato10.png" alt="" id="gato10">
     <script>
 
         var PropCanvas={
@@ -46,16 +48,15 @@
         // let posicionHorizontal;
 
         function dibujarObstaculo(tipoObstaculo){
-
         }
 
         let obstaculos = [
         ]; //{ x, y, anchura, altura }
         
 
-        for (let i = 0, x = anchura; i < 50; i++, x+= Math.round( Math.random() * 400 ) + 600 ) {
+        for (let i = 0, x = anchura; i < 50; i++, x+= Math.round( Math.random() * 600 ) + 600 ) {
             obstaculos.push( { x: x, y: altura - 100, anchura: 70 , altura: 100, dibujar:function(contexto){
-            contexto.fillStyle = "rgb(150, 0, 0)";
+            contexto.fillStyle = "rgb(250, 10, 0)";
             contexto.beginPath();
             contexto.fillRect(this.x, this.y, this.anchura, this.altura);
 
@@ -63,11 +64,9 @@
             contexto.beginPath();
             contexto.fillText( i, this.x + 10, this.y);
             contexto.fill();
-
         }
         } );
         }
-
 
         function gradosARadianes( grados ) {
             return grados * (Math.PI/180);
@@ -85,14 +84,14 @@
         }
 
         //4- Dibujar una imagen
-        let imagenActual = 1,
+        let imagenActual = 2,
             imagen = document.getElementById(`gato${ imagenActual }`),
             anchuraImagenInicial,
             alturaImagenInicial,
             anchuraImagen = imagen.width, 
             alturaImagen = imagen.height,
             estaCreciendo = false,
-            contidadASaltar = 0;
+            cantidadASaltar = 1;
 
          imagen.onload = dibujarImagen;
 
@@ -100,13 +99,13 @@
             anchuraImagenInicial = anchuraImagenInicial || imagen.width;
             alturaImagenInicial = alturaImagenInicial || imagen.height;
             anchuraImagen = anchuraImagenInicial / 2;//anchuraImagen || anchuraImagenInicial; 
-            alturaImagen = alturaImagenInicial / 2; //alturaImagen || alturaImagenInicial;
+            alturaImagen = alturaImagenInicial / 2;//alturaImagen || alturaImagenInicial;
 
             let porcentajeAltura = anchuraImagenInicial/alturaImagenInicial;
 
             PropCanvas.posicionHorizontal =  PropCanvas.posicionHorizontal || 0;
 
-            let tiempo = 70;
+            let tiempo = 60;
             let xInicial = 0;
             let tamanioMinimoImagen = 60;
             let tamanioMaximoImagen = 500;
@@ -148,7 +147,7 @@
                     contexto.stroke();
 
                     contexto.beginPath();
-                    contexto.strokeStyle = "white";
+                    contexto.strokeStyle = "black";
                     contexto.moveTo( x + variacion/2, altura - 20 );
                     contexto.lineTo( x + variacion/2 + 40, altura);
                     contexto.stroke();
@@ -175,15 +174,14 @@
                 }
 
                 if( estaSaltando) {
-                    imagenActual = 8;
+                    imagenActual = 10;
                 }
                 else {
                     imagenActual+=2
-                    if( imagenActual > 8) {
+                    if( imagenActual > 10) {
                         imagenActual = 1;
                     }
                 }
-                
                 
                 let maximoAInclinar = 50;
 
@@ -202,16 +200,14 @@
                     }
 
                     if(estaSubiendo){
-                        contexto.rotate( gradosARadianes( cantidadAInclinar == maximoAInclinar ? 0 : -cantidadAInclinar) );
-                        
+                        contexto.rotate( gradosARadianes( cantidadAInclinar == maximoAInclinar ? 0 : -cantidadAInclinar) );  
                     }
                     else{
                         contexto.rotate( gradosARadianes(cantidadAInclinar) );
                         if(cantidadAInclinar<=0){
                             estaSaltando=false;
                         }
-                    }
-                    
+                    }  
                 }
                 else {
                     cantidadAInclinar =0;
@@ -242,8 +238,19 @@
                     const obstaculo = obstaculos[i];
                     obstaculo.dibujar(contexto);
 
-                    obstaculo.x -= variacionHorizontal;
-                }
+                    obstaculo.x -= variacionHorizontal;                  
+                
+                // if (obstaculos[cambio].x <=0) {
+                //     cambio++;
+                //     puntuacion +=10;
+                // }
+
+                // if (cantidadASaltar == 0 && obstaculos[cambio].x <= 140) {
+
+                // }
+                // contexto.font = '25px Calibre';
+                // contexto.fillText('Puntuacion:' + puntuacion,150,50);
+            }
             }, tiempo); 
         }
 
