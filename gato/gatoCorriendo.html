@@ -12,7 +12,6 @@
             margin: auto;
             display: block;
         }
-
         img {
             display: none;
         }
@@ -30,6 +29,7 @@
     <img src="imagenes/gato6.png" alt="" id="gato6">
     <img src="imagenes/gato7.png" alt="" id="gato7">
     <img src="imagenes/gato8.png" alt="" id="gato8">
+    
     <script>
 
         var PropCanvas = {
@@ -48,6 +48,7 @@
         let estaSaltando = false;
         let maximoASaltar = 700;
         let cantidadASaltar = 0;
+        let sonido = 0;
         // let posicionHorizontal;
         let personaje = {
             x: 0,
@@ -98,12 +99,9 @@
                     contexto.beginPath();
                     contexto.fillText(i, this.x + 10, this.y);
                     contexto.fill();
-
                 }
-
             });
         }
-
 
         function gradosARadianes(grados) {
             return grados * (Math.PI / 180);
@@ -119,9 +117,7 @@
                 crearLinea({ x: 0, y }, { x: anchura, y }).dibujar();
             }
         }
-
         //4- Dibujar una imagen
-
 
         let imagenActual = 1,
             anchuraImagenInicial,
@@ -224,13 +220,7 @@
                         imagenActual = 1;
                     }
                 }
-
-
-
-
                 //dibujar la imagen del gato
-
-
                 //contexto.translate(PropCanvas.posicionHorizontal, posicionVertical);
                 if (estaSaltando) {
 
@@ -258,13 +248,9 @@
                             contidadASaltar = 0;
                         }
                     }
-
                 }
                 //console.log(personaje);
-
-
                 // console.log('estaSubiendo: ', estaSubiendo);
-
                 // console.log('estaSaltando:', estaSaltando);
 
                 personaje.imagen = document.getElementById(`gato${cantidadASaltar == maximoASaltar ? 2 : imagenActual}`);
@@ -273,8 +259,6 @@
                 //personaje.y = altura - personaje.altura;// (cantidadASaltar == maximoASaltar ? altura - personaje.altura * 1.5 : 0);
 
                 contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
-
-
 
                 contexto.strokeStyle = "red";
                 contexto.strokeRect( personaje.x, personaje.y, personaje.anchura, personaje.altura);
@@ -287,7 +271,6 @@
                     if (personaje.chocaCon(obstaculo)) {
                         console.log("Choca");
                     }
-
                 }
 
                 if (personaje.anchura < tamanioMinimoImagen || personaje.altura < tamanioMinimoImagen) {
@@ -299,13 +282,8 @@
                 }
 
                 //contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
-
-
-
             }, tiempo);
         }
-
-
 
         miCanvas.addEventListener("click", () => {
             if (PropCanvas.estaPausado) {
@@ -323,7 +301,6 @@
                 estaSaltando = true;
                 estaSubiendo = true;
             }
-
         });
         //document.addEventListener("keyup", function () {
         //    estaSaltando = false;
