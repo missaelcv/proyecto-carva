@@ -18,6 +18,7 @@
     </style>
 </head>
 
+
 <body>
     <canvas id="miCanvas" width="1000" height="500"></canvas>
 
@@ -209,6 +210,7 @@
                     contexto.moveTo(0, y);
                     contexto.lineTo(anchura, y);
                     contexto.stroke();
+                   
                 }
 
                 if (estaSaltando) {
@@ -220,21 +222,26 @@
                         imagenActual = 1;
                     }
                 }
+
+                   
                 //dibujar la imagen del gato
                 //contexto.translate(PropCanvas.posicionHorizontal, posicionVertical);
                 if (estaSaltando) {
-
+                 
                     //contexto.translate(PropCanvas.posicionHorizontal, estaSubiendo ? posicionVertical : posicionVertical - personaje.altura);
                     cantidadASaltar += (estaSubiendo ? 60 : -60);
-
+                   
                     if (cantidadASaltar > maximoASaltar) {
                         cantidadASaltar = maximoASaltar;
                         estaSubiendo = false;
+                      
                     }
                    // console.log("Cantidad a saltar: " + cantidadASaltar);
                     if (estaSubiendo) {
+                      
                         //contexto.rotate(gradosARadianes(cantidadASaltar == maximoASaltar ? 0 : -cantidadASaltar));
                         personaje.y -= 20;
+                       
 
                     } else {
                         // contexto.rotate(gradosARadianes(cantidadASaltar));
@@ -246,9 +253,12 @@
                         if (cantidadASaltar <= 0) {
                             estaSaltando = false;
                             contidadASaltar = 0;
+                           
+                            
                         }
                     }
                 }
+
                 //console.log(personaje);
                 // console.log('estaSubiendo: ', estaSubiendo);
                 // console.log('estaSaltando:', estaSaltando);
@@ -267,12 +277,18 @@
                     const obstaculo = obstaculos[i];
                     obstaculo.dibujar(contexto);
                     obstaculo.x -= variacionHorizontal;
+                   
 
                     if (personaje.chocaCon(obstaculo)) {
                         console.log("Choca");
-                    }
-                }
+                    
+                        const music = new Audio('./audio/marioWoo.mp3');
+                        music.play();
+                        music.pause();
+                        
 
+                }
+            }
                 if (personaje.anchura < tamanioMinimoImagen || personaje.altura < tamanioMinimoImagen) {
                     estaCreciendo = true;
                 }
@@ -283,7 +299,12 @@
 
                 //contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
             }, tiempo);
+
+
+                
+                        
         }
+
 
         miCanvas.addEventListener("click", () => {
             if (PropCanvas.estaPausado) {
@@ -300,12 +321,19 @@
             if (!estaSaltando) {
                 estaSaltando = true;
                 estaSubiendo = true;
+                
+                
             }
         });
         //document.addEventListener("keyup", function () {
         //    estaSaltando = false;
         //});
-    </script>
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js"></script>
+
 </body>
 
 </html>
