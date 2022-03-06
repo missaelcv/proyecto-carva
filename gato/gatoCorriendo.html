@@ -43,14 +43,13 @@
         let contexto = miCanvas.getContext("2d");
         let anchura = miCanvas.width;
         let altura = miCanvas.height;
-        // let intervalo;
-        // let estaPausado = false;
+       
         let estaSubiendo = false;
         let estaSaltando = false;
         let maximoASaltar = 700;
         let cantidadASaltar = 0;
         let sonido = 0;
-        // let posicionHorizontal;
+     
         let personaje = {
             x: 0,
             y: 0,
@@ -58,8 +57,7 @@
             altura: 0,
             chocaCon(obstaculo) {
 
-                // console.log("LLama a la funcion");
-
+               
                 let izquierdaPersonaje = this.x;
                 let derechaPersonaje = izquierdaPersonaje + this.anchura;
                 let arribaPersonaje = this.y;
@@ -84,7 +82,7 @@
         }
 
         let obstaculos = [
-        ]; //{ x, y, anchura, altura }
+        ]; 
 
         let obstaculoTamano = 0;
         for (let i = 0, x = anchura; i < 50; i++, x += Math.round(Math.random() * 400) + 600) {
@@ -149,9 +147,7 @@
             let tamanioMinimoImagen = 60;
             let tamanioMaximoImagen = 500;
             PropCanvas.intervalo = setInterval(() => {
-                // console.log(imagenActual);
-                // console.log("personaje.anchura: ", personaje.anchura);
-                // console.log("personaje.altura: ", personaje.altura);
+              
 
                 contexto.beginPath();
                 contexto.fillStyle = "#eee";
@@ -197,9 +193,7 @@
                     xInicial = 0;
                 }
 
-                //personaje.anchura = personaje.anchura + (estaCreciendo ? 1 : -1);
-                //personaje.altura = personaje.anchura / porcentajeAltura;
-
+              
                 let posicionVertical = altura - personaje.altura;
 
                 contexto.strokeStyle = "black";
@@ -225,10 +219,10 @@
 
                    
                 //dibujar la imagen del gato
-                //contexto.translate(PropCanvas.posicionHorizontal, posicionVertical);
+              
                 if (estaSaltando) {
                  
-                    //contexto.translate(PropCanvas.posicionHorizontal, estaSubiendo ? posicionVertical : posicionVertical - personaje.altura);
+                  
                     cantidadASaltar += (estaSubiendo ? 60 : -60);
                    
                     if (cantidadASaltar > maximoASaltar) {
@@ -236,15 +230,15 @@
                         estaSubiendo = false;
                       
                     }
-                   // console.log("Cantidad a saltar: " + cantidadASaltar);
+                
                     if (estaSubiendo) {
                       
-                        //contexto.rotate(gradosARadianes(cantidadASaltar == maximoASaltar ? 0 : -cantidadASaltar));
+                       
                         personaje.y -= 20;
                        
 
                     } else {
-                        // contexto.rotate(gradosARadianes(cantidadASaltar));
+                      
                         personaje.y += 20;
                         if(personaje.y > altura - personaje.altura)
                         {
@@ -259,14 +253,10 @@
                     }
                 }
 
-                //console.log(personaje);
-                // console.log('estaSubiendo: ', estaSubiendo);
-                // console.log('estaSaltando:', estaSaltando);
-
+               
                 personaje.imagen = document.getElementById(`gato${cantidadASaltar == maximoASaltar ? 2 : imagenActual}`);
 
-                // personaje.x = 0;
-                //personaje.y = altura - personaje.altura;// (cantidadASaltar == maximoASaltar ? altura - personaje.altura * 1.5 : 0);
+               
 
                 contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
 
@@ -282,9 +272,9 @@
                     if (personaje.chocaCon(obstaculo)) {
                         console.log("Choca");
                     
-                        const music = new Audio('./audio/marioWoo.mp3');
-                        music.play();
-                        music.pause();
+                        // const music = new Audio('./audio/marioWoo.mp3');
+                        // music.play();
+                        // music.pause();
                         
 
                 }
@@ -297,7 +287,7 @@
                     estaCreciendo = false;
                 }
 
-                //contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
+               
             }, tiempo);
 
 
@@ -325,9 +315,6 @@
                 
             }
         });
-        //document.addEventListener("keyup", function () {
-        //    estaSaltando = false;
-        //});
 
 
 </script>
