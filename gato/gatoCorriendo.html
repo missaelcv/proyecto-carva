@@ -277,13 +277,19 @@
                    
 
                     if (personaje.chocaCon(obstaculo)) {
+                        choque.play();
                         console.log("Choca");
-                    
-                        // const music = new Audio('./audio/marioWoo.mp3');
-                        // music.play();
-                        // music.pause();
-                        
+                        clearInterval(PropCanvas.intervalo);
 
+                        if (puntuacion > maximaPuntuacion) {
+                            maximaPuntuacion = puntuacion
+                        }
+                        
+                        puntuacion = 0;
+                        contexto.font = '100px Arial';
+                        contexto.fillText('Perdido',anchura / 2 - 250, altura / 2);
+                        contexto.font = '30px Arial';
+                        contexto.fillText('Doble click para continuar', anchura / 2 - 150, altura / 2 + 50);
                 }
             }
                 if (personaje.anchura < tamanioMinimoImagen || personaje.altura < tamanioMinimoImagen) {
