@@ -43,12 +43,19 @@
         let contexto = miCanvas.getContext("2d");
         let anchura = miCanvas.width;
         let altura = miCanvas.height;
-       
         let estaSubiendo = false;
         let estaSaltando = false;
         let maximoASaltar = 700;
         let cantidadASaltar = 0;
-        let sonido = 0;
+        let pausar = new Audio("pajaritos.mp3");
+        let salto = new Audio("marioWhoo.mp3");
+        let choque = new Audio("game over.mp3");
+        let iniciar = new Audio("marioWhoo.mp3");
+        let puntuacion =0;
+        let maximaPuntuacion = 0;
+        let evaluar = true;
+        let tiempoRestante = 0;
+
      
         let personaje = {
             x: 0,
@@ -58,10 +65,10 @@
             chocaCon(obstaculo) {
 
                
-                let izquierdaPersonaje = this.x;
-                let derechaPersonaje = izquierdaPersonaje + this.anchura;
+                let izquierdaPersonaje = this.x/ 1.5;
+                let derechaPersonaje = izquierdaPersonaje + this.anchura / 1.5;
                 let arribaPersonaje = this.y;
-                let abajoPersonaje = arribaPersonaje + this.altura;
+                let abajoPersonaje = arribaPersonaje + this.altura / 1.5;
 
                 let izquierdaObstaculo = obstaculo.x;
                 let derechaObstaculo = izquierdaObstaculo + obstaculo.anchura;
@@ -208,7 +215,7 @@
                 }
 
                 if (estaSaltando) {
-                    imagenActual = 7;
+                    imagenActual = 4;
                 }
                 else {
                     imagenActual += 2
