@@ -30,6 +30,8 @@
     <img src="imagenes/gato6.png" alt="" id="gato6">
     <img src="imagenes/gato7.png" alt="" id="gato7">
     <img src="imagenes/gato8.png" alt="" id="gato8">
+    <img src="imagenes/flor1.png" alt="" id="flor1">
+    <img src="imagenes/flor2.png" alt="" id="flor2 ">
     
     <script>
 
@@ -47,14 +49,14 @@
         let estaSaltando = false;
         let maximoASaltar = 700;
         let cantidadASaltar = 0;
-        let pausar = new Audio("pajaritos.mp3");
-        let salto = new Audio("marioWhoo.mp3");
-        let choque = new Audio("game over.mp3");
-        let iniciar = new Audio("marioWhoo.mp3");
         let puntuacion =0;
         let maximaPuntuacion = 0;
         let evaluar = true;
         let tiempoRestante = 0;
+        let pausar = new Audio("pajaritos.mp3");
+        let salto = new Audio("marioWhoo.mp3");
+        let choque = new Audio("game over.mp3");
+        let iniciar = new Audio("marioWhoo.mp3");
 
      
         let personaje = {
@@ -75,13 +77,17 @@
                 let arribaObstaculo = obstaculo.y;
                 let abajoObstaculo = arribaObstaculo + obstaculo.altura;
 
+                if (evaluar) {
                 if (izquierdaPersonaje >= derechaObstaculo || arribaPersonaje >= abajoObstaculo || derechaPersonaje <= izquierdaObstaculo || abajoPersonaje <= arribaObstaculo) {
                     return false;
                 }
                 else {
                     return true;
                 }
+            } else {
+                return false;
             }
+        }
         };
 
         function dibujarObstaculo(tipoObstaculo) {
@@ -287,11 +293,13 @@
                         
                         puntuacion = 0;
                         contexto.font = '100px Arial';
-                        contexto.fillText('Perdido',anchura / 2 - 250, altura / 2);
+                        contexto.fillText('Reintetar',anchura / 2 - 250, altura / 2);
                         contexto.font = '30px Arial';
-                        contexto.fillText('Doble click para continuar', anchura / 2 - 150, altura / 2 + 50);
+                        contexto.fillText('Precione para reitentar', anchura / 2 - 150, altura / 2 + 50);
                 }
             }
+
+            tiempo = puntacion;
                 if (personaje.anchura < tamanioMinimoImagen || personaje.altura < tamanioMinimoImagen) {
                     estaCreciendo = true;
                 }
