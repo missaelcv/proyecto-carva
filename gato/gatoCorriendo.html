@@ -277,8 +277,10 @@
                     const obstaculo = obstaculos[i];
                     obstaculo.dibujar(contexto);
                     obstaculo.x -= variacionHorizontal;
-                   
+                    let tamanoflor1 = tamanoFlores[i];
 
+                    contexto.drawImage(imagenflor1, obstaculo.x + tamanoflor1, altura - tamanoflor1 - alturaPiso, tamanoflor1, tamanoflor1);
+                   
                     if (personaje.chocaCon(obstaculo)) {
                         choque.play();
                         console.log("Choca");
@@ -289,7 +291,7 @@
                         }
                         estaSaltando = false;
 
-                        
+
                         puntuacion = 0;
                         contexto.font = '100px Arial';
                         contexto.fillText('Gamer Over ',anchura / 2 - 250, altura / 2);
@@ -303,10 +305,15 @@
             contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
 
             if (personaje.hitBox) { 
-                x: personaje.x + (personaje.anchura * 10 / 100),
-                y: personaje.y + (personaje.altura * 10 / 100),
-                anchura: personaje.anchura - (personaje.anchura * 20 / 100),
-                 altura: personaje.altura - (personaje.altura * 20 / 100),
+                x: personaje.x + (personaje.anchura * 10 / 100);
+                y: personaje.y + (personaje.altura * 10 / 100);
+                anchura: personaje.anchura - (personaje.anchura * 20 / 100);
+                 altura: personaje.altura - (personaje.altura * 20 / 100);
+            };
+
+            if (personaje.hitBox) {
+                contexto.strokeStyle = "red";
+                contexto.strokeRect(personaje.hitBox.x, personaje.hitBox.y, personaje.hitBox.anchura, personaje.hitBox.altura);
             }
 
             contexto.strokeStyle = green;
