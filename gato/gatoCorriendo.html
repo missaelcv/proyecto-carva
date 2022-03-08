@@ -287,6 +287,8 @@
                         if (puntuacion > maximaPuntuacion) {
                             maximaPuntuacion = puntuacion
                         }
+                        estaSaltando = false;
+
                         
                         puntuacion = 0;
                         contexto.font = '100px Arial';
@@ -296,7 +298,16 @@
                 }
             }
 
-            if (personaje.hitBox) { }
+            personaje.imagen = document.getElementById('gato${cantidadAsaltar == maximoAsaltar ? 2 : imagenActual}');
+
+            contexto.drawImage(personaje.imagen, personaje.x, personaje.y, personaje.anchura, personaje.altura);
+
+            if (personaje.hitBox) { 
+                x: personaje.x + (personaje.anchura * 10 / 100),
+                y: personaje.y + (personaje.altura * 10 / 100),
+                anchura: personaje.anchura - (personaje.anchura * 20 / 100),
+                 altura: personaje.altura - (personaje.altura * 20 / 100),
+            }
 
             contexto.strokeStyle = green;
                 contexto.strokeRect(personaje.x, personaje.y, personaje.anchura, personaje.altura);
@@ -317,7 +328,7 @@
 
                 
             },
-             PropCanvas.intervalo = setInterval(funcionAl_llamar, tiempo);               
+              tiempo;               
         }
 
         miCanvas.addEventListener("click", () => {
