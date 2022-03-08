@@ -57,8 +57,9 @@
         let salto = new Audio("marioWhoo.mp3");
         let choque = new Audio("game over.mp3");
         let iniciar = new Audio("marioWhoo.mp3");
+        let alturaPiso = 30;
+        let imagenflor1 = document.getElementById(flor1);
 
-     
         let personaje = {
             x: 0,
             y: 0,
@@ -66,7 +67,6 @@
             altura: 0,
             chocaCon(obstaculo) {
 
-               
                 let izquierdaPersonaje = this.x/ 1.5;
                 let derechaPersonaje = izquierdaPersonaje + this.anchura / 1.5;
                 let arribaPersonaje = this.y;
@@ -96,6 +96,7 @@
 
         let obstaculos = [
         ]; 
+        let tamanoflor1 = [];
 
         let obstaculoTamano = 0;
         for (let i = 0, x = anchura; i < 50; i++, x += Math.round(Math.random() * 400) + 600) {
@@ -196,7 +197,7 @@
                 //     contexto.moveTo(x + variacion / 2, altura - 20);
                 //     contexto.lineTo(x + variacion / 2 + 40, altura);
                 //     contexto.stroke();
-                // }
+                 }
 
                 xInicial += variacionHorizontal;
                 if (xInicial > variacion) {
@@ -275,6 +276,7 @@
                         choque.play();
                         console.log("Choca");
                         clearInterval(PropCanvas.intervalo);
+                        PropCanvas.intervalo = setInterval(funcionALlamar, tiempo / 2);
 
                         if (puntuacion > maximaPuntuacion) {
                             maximaPuntuacion = puntuacion
@@ -282,7 +284,7 @@
                         estaSaltando = false;
 
                         puntuacion = 0;
-                        contexto.font = '100px Arial';
+                        contexto.font = '150px Arial';
                         contexto.fillText('Gamer Over ',anchura / 2 - 250, altura / 2);
                         contexto.font = '30px Arial';
                         contexto.fillText('Precione para reitentar', anchura / 2 - 150, altura / 2 + 50);
@@ -322,8 +324,8 @@
                     estaCreciendo = false;
                 }
 
-            },
-              tiempo;               
+            }
+             PropCanvas.intervalo = setInterval(funcionALlamar, tiempo);               
         }
 
         miCanvas.addEventListener("click", () => {
